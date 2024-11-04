@@ -2,7 +2,7 @@
 <robot name="tuppy_description" xmlns:xacro="http://ros.org/wiki/xacro">
   <link name="base_link">
   	<visual><geometry>
-    <box size="0.1 0.1 0.1"/>
+      <box size="0.1 0.1 0.1"/>
   	</geometry></visual>
   </link>
   <link name="base_footprint"/>
@@ -13,21 +13,32 @@
   </joint>
 
   <link name="front_frame"><visual><geometry>
-    <box size="0.025 0.762 0.025"/>
+    <box size="0.025 0.762 0.1"/>
   </geometry></visual></link>
 
   <joint name="baselink_frontframe" type="fixed">
     <parent link="base_link"/>
-    <child link="base_footprint"/>
-    <origin xyz="0.0 0.0 -0.2" rpy="0 0 0"/>
+    <child link="front_frame"/>
+    <origin xyz="0.0 0.0 -0.1" rpy="0 0 0"/>
   </joint>
+ 
+  <link name="camera"><visual><geometry>
+    <box size=".025 .1 .05"/>
+  </geometry></visual></link>
+
+  <joint name="frontframe_camear" type="fixed">
+    <parent link="front_frame"/>
+    <child link="camera"/>
+    <origin xyz="0.025 0 0.025" rpy="0 0 0"/>
+  </joint>
+  
   <link name="left_hull"><visual><geometry>
     <box size="1.27 0.254 0.1778"/>
   </geometry></visual></link>
   <joint name="frontframe_lefthull" type="fixed">
     <parent link="front_frame"/>
     <child link="left_hull"/>
-    <origin xyz="-0.5 0.32 -0.1" rpy="0 0 0"/>
+    <origin xyz="-0.5 0.32 -0.14" rpy="0 0 0"/>
   </joint>
   <link name="right_hull"><visual><geometry>
     <box size="1.27 0.254 0.1778"/>
@@ -45,9 +56,9 @@
   </geometry></visual></link>
 
   <joint name="frontframe_middleframe" type="fixed">
-    <parent link="front_frame"/>
+    <parent link="left_hull"/>
     <child link="middle_frame"/>
-    <origin xyz="-0.4 0 0" rpy="0 0 0"/>
+    <origin xyz="0 -.325 .1" rpy="0 0 0"/>
   </joint>
   <joint name="middleframe_bottomframe" type="fixed">
     <parent link="middle_frame"/>
@@ -56,7 +67,7 @@
   </joint>
   <link name="polycarbsheet"><visual><geometry>
     <box size=".762 .762 .013"/>
-  </geometr></visual></link>
+  </geometry></visual></link>
   <joint name="middleframe_polycarb" type="fixed">
     <parent link="middle_frame"/>
     <child link="polycarbsheet"/>
@@ -71,4 +82,3 @@
     <origin xyz="0 0 .1" rpy="0 0 0"/>
   </joint>
 </robot>
-
